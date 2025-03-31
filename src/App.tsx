@@ -13,9 +13,11 @@ import TeamPage from "./pages/TeamPage";
 import CalendarPage from "./pages/CalendarPage";
 import SettingsPage from "./pages/SettingsPage";
 import ProjectPage from "./pages/ProjectPage";
+import Dashboard from "./pages/Dashboard";
 
 import MainLayout from "./components/Layout/MainLayout";
 
+// Crear la instancia de QueryClient fuera del componente
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -65,5 +67,3 @@ const App = () => (
 );
 
 export default App;
-
-import Dashboard from "./pages/Dashboard";
