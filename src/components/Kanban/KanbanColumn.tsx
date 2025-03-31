@@ -1,10 +1,20 @@
 
-import React from 'react';
-import { Status, Task } from '@/types';
+import React, { useState } from 'react';
+import { Status, Task, Priority } from '@/types';
 import { KanbanTask } from './KanbanTask';
 import { cn } from '@/lib/utils';
-import { Plus } from 'lucide-react';
+import { Plus, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useApp } from '@/context/AppContext';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from '@/components/ui/select';
 
 interface KanbanColumnProps {
   title: string;
@@ -16,6 +26,12 @@ interface KanbanColumnProps {
 }
 
 export const KanbanColumn = ({ title, count, status, tasks, onDrop, color }: KanbanColumnProps) => {
+  const { currentProject, addTask } = useApp();
+  const [isAddingTask, setIsAddingTask] = useState(false);
+  const [newTaskTitle, setNewTaskTitle] = useState('');
+  const [newTaskDescription, setNewTaskDescription] = useState('');
+  const [priority, setPriority] = useState<Priority>('medium');
+  
   // Drag and drop handlers
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -25,6 +41,31 @@ export const KanbanColumn = ({ title, count, status, tasks, onDrop, color }: Kan
     e.preventDefault();
     const taskId = e.dataTransfer.getData('text/plain');
     onDrop(taskId, status);
+  };
+
+  const handleAddTask = () => {
+    if (!newTaskTitle.trim() || !currentProject) return;
+    
+    const today = new Date();
+    // Set due date to 7 days from now
+    const dueDate = new Date();
+    dueDate.setDate(today.getDate() + 7);
+    
+    addTask({
+      title: newTaskTitle,
+      description: newTaskDescription,
+      status: status,
+      priority: priority,
+      dueDate: dueDate.toISOString(),
+      assignedTo: [],
+      projectId: currentProject.id,
+    });
+    
+    // Reset form
+    setNewTaskTitle('');
+    setNewTaskDescription('');
+    setPriority('medium');
+    setIsAddingTask(false);
   };
 
   return (
@@ -41,14 +82,71 @@ export const KanbanColumn = ({ title, count, status, tasks, onDrop, color }: Kan
             {count}
           </span>
         </div>
-        <Button variant="ghost" size="icon" className="h-7 w-7">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="h-7 w-7"
+          onClick={() => setIsAddingTask(true)}
+        >
           <Plus className="h-4 w-4" />
         </Button>
       </div>
       
       <div className="flex-1 bg-secondary/50 p-3 rounded-lg overflow-hidden flex flex-col min-h-[50vh]">
+        {isAddingTask && (
+          <div className="bg-white p-3 rounded-lg shadow mb-3 animate-fade-in">
+            <div className="flex justify-between items-center mb-2">
+              <h4 className="font-medium">Nueva tarea</h4>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-6 w-6" 
+                onClick={() => setIsAddingTask(false)}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="space-y-3">
+              <Input
+                placeholder="Título de la tarea"
+                value={newTaskTitle}
+                onChange={(e) => setNewTaskTitle(e.target.value)}
+                className="w-full"
+              />
+              <Textarea
+                placeholder="Descripción"
+                value={newTaskDescription}
+                onChange={(e) => setNewTaskDescription(e.target.value)}
+                className="w-full"
+                rows={2}
+              />
+              <div>
+                <label className="text-sm text-muted-foreground mb-1 block">
+                  Prioridad
+                </label>
+                <Select
+                  value={priority}
+                  onValueChange={(value: Priority) => setPriority(value)}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Prioridad" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="low">Baja</SelectItem>
+                    <SelectItem value="medium">Media</SelectItem>
+                    <SelectItem value="high">Alta</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex justify-end">
+                <Button onClick={handleAddTask}>Guardar</Button>
+              </div>
+            </div>
+          </div>
+        )}
+        
         <div className="space-y-3 flex-1 overflow-y-auto pr-1">
-          {tasks.length === 0 ? (
+          {tasks.length === 0 && !isAddingTask ? (
             <div className="h-full flex items-center justify-center">
               <p className="text-sm text-muted-foreground">
                 No hay tareas

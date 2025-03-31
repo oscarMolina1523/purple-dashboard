@@ -8,16 +8,20 @@ const KanbanPage = () => {
   const { projects, currentProject, setCurrentProject } = useApp();
   
   const handleProjectChange = (projectId: string) => {
-    const selectedProject = projects.find(p => p.id === projectId) || null;
-    setCurrentProject(selectedProject);
+    if (projectId === 'all') {
+      setCurrentProject(null);
+    } else {
+      const selectedProject = projects.find(p => p.id === projectId) || null;
+      setCurrentProject(selectedProject);
+    }
   };
   
   return (
     <div className="space-y-6 h-full flex flex-col">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold mb-1">Tablero Kanban</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl md:text-3xl font-bold mb-1">Tablero Kanban</h1>
+          <p className="text-sm md:text-base text-muted-foreground">
             Organiza y visualiza el progreso de tus tareas
           </p>
         </div>
@@ -42,9 +46,9 @@ const KanbanPage = () => {
         </div>
       </div>
       
-      <div className="flex-1">
+      <div className="flex-1 overflow-hidden">
         <KanbanBoard 
-          projectId={currentProject?.id !== "all" ? currentProject?.id : undefined} 
+          projectId={currentProject?.id} 
         />
       </div>
     </div>
