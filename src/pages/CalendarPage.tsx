@@ -26,7 +26,7 @@ const CalendarPage = () => {
   const selectedDateStr = date ? format(date, 'yyyy-MM-dd') : '';
   const selectedDateTasks = tasksByDate[selectedDateStr] || [];
   
-  // Custom day renderer to show task indicators
+  // Custom day content renderer
   const renderDay = (day: Date) => {
     const dateStr = format(day, 'yyyy-MM-dd');
     const dayTasks = tasksByDate[dateStr] || [];
@@ -82,14 +82,7 @@ const CalendarPage = () => {
                 selected={date}
                 onSelect={setDate}
                 locale={es}
-                components={{
-                  Day: ({ day, ...props }) => (
-                    <button {...props}>
-                      {renderDay(day)}
-                    </button>
-                  ),
-                }}
-                className="rounded-md border"
+                className="rounded-md border pointer-events-auto"
               />
             </CardContent>
           </Card>
