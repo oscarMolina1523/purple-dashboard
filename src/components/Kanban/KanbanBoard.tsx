@@ -4,6 +4,7 @@ import { Task } from '@/types';
 import { KanbanColumn } from './KanbanColumn';
 import { useApp } from '@/context/AppContext';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { 
   Tabs, 
   TabsContent, 
@@ -37,14 +38,66 @@ export const KanbanBoard = ({ projectId }: KanbanBoardProps) => {
   // For mobile/tablet view, use a tabbed interface
   if (isMobile) {
     return (
-      <Tabs defaultValue="todo" className="w-full">
-        <TabsList className="grid grid-cols-4 mb-4">
-          <TabsTrigger value="todo">Por hacer ({todoTasks.length})</TabsTrigger>
-          <TabsTrigger value="in-progress">En progreso ({inProgressTasks.length})</TabsTrigger>
-          <TabsTrigger value="review">Revisión ({reviewTasks.length})</TabsTrigger>
-          <TabsTrigger value="done">Completado ({doneTasks.length})</TabsTrigger>
-        </TabsList>
-        <TabsContent value="todo">
+      <div className="flex flex-col h-full">
+        <Tabs defaultValue="todo" className="w-full flex flex-col h-full">
+          <TabsList className="grid grid-cols-4 mb-4">
+            <TabsTrigger value="todo" className="text-xs py-1">Por hacer <span className="ml-1 text-xs">({todoTasks.length})</span></TabsTrigger>
+            <TabsTrigger value="in-progress" className="text-xs py-1">En progreso <span className="ml-1 text-xs">({inProgressTasks.length})</span></TabsTrigger>
+            <TabsTrigger value="review" className="text-xs py-1">Revisión <span className="ml-1 text-xs">({reviewTasks.length})</span></TabsTrigger>
+            <TabsTrigger value="done" className="text-xs py-1">Completado <span className="ml-1 text-xs">({doneTasks.length})</span></TabsTrigger>
+          </TabsList>
+          <div className="flex-1 overflow-hidden">
+            <TabsContent value="todo" className="h-full mt-0">
+              <KanbanColumn 
+                title="Por hacer" 
+                count={todoTasks.length} 
+                status="todo" 
+                tasks={todoTasks} 
+                onDrop={handleTaskDrop}
+                color="status-todo"
+              />
+            </TabsContent>
+            <TabsContent value="in-progress" className="h-full mt-0">
+              <KanbanColumn 
+                title="En progreso" 
+                count={inProgressTasks.length} 
+                status="in-progress" 
+                tasks={inProgressTasks} 
+                onDrop={handleTaskDrop}
+                color="status-in-progress"
+              />
+            </TabsContent>
+            <TabsContent value="review" className="h-full mt-0">
+              <KanbanColumn 
+                title="Revisión" 
+                count={reviewTasks.length} 
+                status="review" 
+                tasks={reviewTasks} 
+                onDrop={handleTaskDrop}
+                color="status-review"
+              />
+            </TabsContent>
+            <TabsContent value="done" className="h-full mt-0">
+              <KanbanColumn 
+                title="Completado" 
+                count={doneTasks.length} 
+                status="done" 
+                tasks={doneTasks} 
+                onDrop={handleTaskDrop}
+                color="status-done"
+              />
+            </TabsContent>
+          </div>
+        </Tabs>
+      </div>
+    );
+  }
+
+  // For desktop view, use a grid layout with scroll
+  return (
+    <div className="h-full overflow-hidden">
+      <ScrollArea className="h-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-1 min-h-[calc(100vh-12rem)]">
           <KanbanColumn 
             title="Por hacer" 
             count={todoTasks.length} 
@@ -53,8 +106,7 @@ export const KanbanBoard = ({ projectId }: KanbanBoardProps) => {
             onDrop={handleTaskDrop}
             color="status-todo"
           />
-        </TabsContent>
-        <TabsContent value="in-progress">
+          
           <KanbanColumn 
             title="En progreso" 
             count={inProgressTasks.length} 
@@ -63,8 +115,7 @@ export const KanbanBoard = ({ projectId }: KanbanBoardProps) => {
             onDrop={handleTaskDrop}
             color="status-in-progress"
           />
-        </TabsContent>
-        <TabsContent value="review">
+          
           <KanbanColumn 
             title="Revisión" 
             count={reviewTasks.length} 
@@ -73,8 +124,7 @@ export const KanbanBoard = ({ projectId }: KanbanBoardProps) => {
             onDrop={handleTaskDrop}
             color="status-review"
           />
-        </TabsContent>
-        <TabsContent value="done">
+          
           <KanbanColumn 
             title="Completado" 
             count={doneTasks.length} 
@@ -83,49 +133,8 @@ export const KanbanBoard = ({ projectId }: KanbanBoardProps) => {
             onDrop={handleTaskDrop}
             color="status-done"
           />
-        </TabsContent>
-      </Tabs>
-    );
-  }
-
-  // For desktop view, use a grid layout
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 h-full">
-      <KanbanColumn 
-        title="Por hacer" 
-        count={todoTasks.length} 
-        status="todo" 
-        tasks={todoTasks} 
-        onDrop={handleTaskDrop}
-        color="status-todo"
-      />
-      
-      <KanbanColumn 
-        title="En progreso" 
-        count={inProgressTasks.length} 
-        status="in-progress" 
-        tasks={inProgressTasks} 
-        onDrop={handleTaskDrop}
-        color="status-in-progress"
-      />
-      
-      <KanbanColumn 
-        title="Revisión" 
-        count={reviewTasks.length} 
-        status="review" 
-        tasks={reviewTasks} 
-        onDrop={handleTaskDrop}
-        color="status-review"
-      />
-      
-      <KanbanColumn 
-        title="Completado" 
-        count={doneTasks.length} 
-        status="done" 
-        tasks={doneTasks} 
-        onDrop={handleTaskDrop}
-        color="status-done"
-      />
+        </div>
+      </ScrollArea>
     </div>
   );
 };

@@ -2,10 +2,12 @@
 import React from 'react';
 import { useApp } from '@/context/AppContext';
 import KanbanBoard from '@/components/Kanban/KanbanBoard';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const KanbanPage = () => {
   const { projects, currentProject, setCurrentProject } = useApp();
+  const isMobile = useIsMobile();
   
   const handleProjectChange = (projectId: string) => {
     if (projectId === 'all') {
@@ -17,11 +19,11 @@ const KanbanPage = () => {
   };
   
   return (
-    <div className="space-y-6 h-full flex flex-col">
+    <div className="space-y-4 h-full flex flex-col">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold mb-1">Tablero Kanban</h1>
-          <p className="text-sm md:text-base text-muted-foreground">
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-1">Tablero Kanban</h1>
+          <p className="text-xs md:text-sm text-muted-foreground">
             Organiza y visualiza el progreso de tus tareas
           </p>
         </div>

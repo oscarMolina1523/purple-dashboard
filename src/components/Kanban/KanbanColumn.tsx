@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { useApp } from '@/context/AppContext';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { 
   Select, 
   SelectContent, 
@@ -92,7 +93,7 @@ export const KanbanColumn = ({ title, count, status, tasks, onDrop, color }: Kan
         </Button>
       </div>
       
-      <div className="flex-1 bg-secondary/50 p-3 rounded-lg overflow-hidden flex flex-col min-h-[50vh]">
+      <div className="flex-1 bg-secondary/50 p-3 rounded-lg overflow-hidden flex flex-col min-h-[calc(60vh-4rem)]">
         {isAddingTask && (
           <div className="bg-white p-3 rounded-lg shadow mb-3 animate-fade-in">
             <div className="flex justify-between items-center mb-2">
@@ -145,19 +146,21 @@ export const KanbanColumn = ({ title, count, status, tasks, onDrop, color }: Kan
           </div>
         )}
         
-        <div className="space-y-3 flex-1 overflow-y-auto pr-1">
-          {tasks.length === 0 && !isAddingTask ? (
-            <div className="h-full flex items-center justify-center">
-              <p className="text-sm text-muted-foreground">
-                No hay tareas
-              </p>
-            </div>
-          ) : (
-            tasks.map(task => (
-              <KanbanTask key={task.id} task={task} />
-            ))
-          )}
-        </div>
+        <ScrollArea className="h-full pr-2">
+          <div className="space-y-3 pr-1">
+            {tasks.length === 0 && !isAddingTask ? (
+              <div className="h-full flex items-center justify-center min-h-[10rem]">
+                <p className="text-sm text-muted-foreground">
+                  No hay tareas
+                </p>
+              </div>
+            ) : (
+              tasks.map(task => (
+                <KanbanTask key={task.id} task={task} />
+              ))
+            )}
+          </div>
+        </ScrollArea>
       </div>
     </div>
   );
