@@ -48,7 +48,7 @@ const KanbanPage = () => {
         </div>
       </div>
       
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 overflow-hidden relative">
         <KanbanBoard 
           projectId={currentProject?.id} 
         />
