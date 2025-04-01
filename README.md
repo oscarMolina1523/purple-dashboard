@@ -1,69 +1,84 @@
-# Welcome to your Lovable project
+# Purple Dashboard
 
-## Project info
+## Descripción
 
-**URL**: https://lovable.dev/projects/9a718522-2203-4065-b29f-04c33358a08c
+Purple Dashboard es una plataforma de gestión de proyectos colaborativos diseñada para mejorar la productividad y organización de equipos. Actualmente, estamos en proceso de adaptación para ofrecer una experiencia optimizada en dispositivos móviles.
 
-## How can I edit this code?
+## Características
 
-There are several ways of editing your application.
+- **Gestión de tareas:** Crea, edita y asigna tareas a los miembros del equipo.
+- **Colaboración en tiempo real:** Comunicación fluida entre los usuarios.
+- **Reportes y métricas:** Visualiza el progreso del proyecto mediante gráficos interactivos.
+- **Interfaz personalizable:** Configuración adaptable según las necesidades del equipo.
+- **Optimización móvil:** En desarrollo para mejorar la experiencia en smartphones y tablets.
 
-**Use Lovable**
+## Tecnologías Utilizadas
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/9a718522-2203-4065-b29f-04c33358a08c) and start prompting.
+- **Frontend:** React, TypeScript, Tailwind CSS
+- **Backend:** Node.js, Express
+- **Base de datos:** Firebase Firestore
+- **Autenticación:** Firebase Auth
+- **Estado global:** Zustand / Redux
 
-Changes made via Lovable will be committed automatically to this repo.
+## Instalación y Uso
 
-**Use your preferred IDE**
+### Prerrequisitos
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Node.js (v16 o superior)
+- npm o yarn
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Instalación
 
-Follow these steps:
+```bash
+# Clonar el repositorio
+git clone https://github.com/oscarMolina1523/purple-dashboard.git
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Acceder al proyecto
+cd purple-dashboard
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+# Instalar dependencias
+npm install # o yarn install
 ```
 
-**Edit a file directly in GitHub**
+### Ejecución en Desarrollo
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run dev # o yarn dev
+```
 
-**Use GitHub Codespaces**
+### Construcción para Producción
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```bash
+npm run build # o yarn build
+```
 
-## What technologies are used for this project?
+## Contribución
 
-This project is built with .
+¡Las contribuciones son bienvenidas! Si deseas colaborar, sigue estos pasos:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+1. Realiza un fork del repositorio.
+2. Crea una nueva rama con tu funcionalidad (`git checkout -b feature-nueva`).
+3. Realiza los cambios y haz commit (`git commit -m 'Añadir nueva funcionalidad'`).
+4. Sube los cambios (`git push origin feature-nueva`).
+5. Abre un Pull Request.
 
-## How can I deploy this project?
+## Roadmap
 
-Simply open [Lovable](https://lovable.dev/projects/9a718522-2203-4065-b29f-04c33358a08c) and click on Share -> Publish.
+- [x] Gestión de tareas
+- [x] Autenticación de usuarios
+- [x] Integración con Firestore
+- [ ] Optimización y diseño responsivo para mobile (En progreso)
+- [ ] Implementación de notificaciones en tiempo real
 
-## I want to use a custom domain - is that possible?
+## Licencia
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+Este proyecto está bajo la licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+
+---
+
+⭐ **Si te gusta este proyecto, considera darle una estrella en GitHub!** ⭐
+
+### Desarrollado por
+**Oscar Danilo Molina**
+
+
