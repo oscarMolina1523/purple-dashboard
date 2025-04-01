@@ -1,17 +1,16 @@
 
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useApp } from '@/context/AppContext';
-import KanbanBoard from '@/components/Kanban/KanbanBoard';
 import TasksList from '@/components/Dashboard/TasksList';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import KanbanBoard from '@/components/Kanban/KanbanBoard';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { getUserById } from '@/data/mockData';
-import { User, Task } from '@/types';
-import { Calendar, CheckCircle, Clock } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useApp } from '@/context/AppContext';
+import { getUserById } from '@/data/mockData';
+import { User } from '@/types';
+import { Calendar, CheckCircle, Clock } from 'lucide-react';
+import { useParams } from 'react-router-dom';
 
 const ProjectPage = () => {
   const { projectId } = useParams<{ projectId: string }>();
@@ -65,7 +64,7 @@ const ProjectPage = () => {
               <span>Completado</span>
               <span>{progress}%</span>
             </div>
-            <Progress value={progress} className="h-2" />
+            <Progress value={progress} className="h-2 z-20" />
             <div className="grid grid-cols-2 gap-4 mt-4">
               <div className="text-center p-4 bg-secondary/50 rounded-lg">
                 <span className="text-2xl font-bold">{projectTasks.length}</span>
